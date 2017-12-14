@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple HTML5 Router</title>
+</head>
+<body>
+  <!-- <Router>
+    <div>
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/topics">Topics</Link></li>
+      </ul>
+
+      <hr/>
+
+      <Route exact path="/" component={Home}/>
+      <Route path="/about" component={About}/>
+      <Route path="/topics" component={Topics}/>
+    </div>
+  </Router> -->
+  <!-- 有没有很像 -->
+  <div class="router">
+    <a class="link" data-link="/">Home</a>
+    <a class="link" data-link="/about">Abput</a>
+    <a class="link" data-link="/topics">Topics</a>
+
+    <hr/>
+
+    <div class="route" data-path="/">home page</div>
+    <div class="route" data-path="/about">about page</div>
+    <div class="route" data-path="/topics">topics page</div>
+  </div>
+</body>
+<script>
+  let routes = document.querySelectorAll('.route')
+  let links = document.querySelectorAll('.link')
+
+  function initLinkListeners() {
+    links.forEach(function(link, index) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault()
+        let targetPath = e.target.dataset.link
+
+        window.history.pushState({
+          path: targetPath
+        }, null, targetPath)
+
+        refreshRoutes()
+      })
+    })
+  }
+
+  initLinkListeners()
+
+  window.addEventListener('popstate', function(e) {
+    refreshRoutes()
+  })
+
+  refreshRoutes()
+
+  function refreshRoutes() {
+    targetPath = window.location.pathname
+    routes.forEach(function(route, index) {
+      route.style.display = route.dataset.path === targetPath ? 'block' : 'none'
+    })
+  }
+</script>
+</html>
